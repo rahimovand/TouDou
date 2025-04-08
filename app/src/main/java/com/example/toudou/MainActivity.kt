@@ -19,29 +19,21 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TouDouTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+/*
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TouDouTheme {
-        Greeting("Android")
-    }
-}
+   1) ToDo application representation must have to be showed !!
+   2) Room Must be used
+   ...
+   ...
+   ...
+   ...
+   ...
+   ...
+
+ */
