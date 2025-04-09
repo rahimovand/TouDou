@@ -23,12 +23,18 @@ fun MainScreen(
         floatingActionButton = {
             TodoAddButton(
                 onClick = {
-                    // todo button clicked
+                    // add button clicked
                 }
             )
         },
-        topBar = { MyTopAppBar() }
-    ) { paddingValues ->
+        topBar = {
+            MyTopAppBar(
+                topMenuDropClicked = {
+                    // dropdown clicked in the top app
+                }
+            )
+        }
+        ) { paddingValues ->
         Column(
             modifier = modifier.padding(paddingValues)
         ) {

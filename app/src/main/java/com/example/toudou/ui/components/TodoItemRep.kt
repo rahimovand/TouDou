@@ -26,6 +26,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.toudou.model.todo
@@ -38,16 +40,17 @@ fun TodoItemRep(
         name = "Application to do smth which is important",
         description = "I wanted to do smth here but t would be too much information to save that up so i just",
         data = "21.04.2006"
-    )
+    ),
+    shape: Shape = RoundedCornerShape(16.dp)
 ) {
 
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
-        shape = RoundedCornerShape(16.dp),
+        shape = shape,
         onClick = {},
-        color = MaterialTheme.colorScheme.tertiaryContainer
+        color = MaterialTheme.colorScheme.surfaceVariant
     ) {
         Row(
             modifier = modifier
@@ -65,7 +68,8 @@ fun TodoItemRep(
             }
             VerticalDivider(
                 modifier = modifier.padding(start = 5.dp, end = 10.dp),
-                thickness = 0.3.dp
+                thickness = 0.3.dp,
+                color = MaterialTheme.colorScheme.inverseSurface
             )
             IconButton(
                 onClick = {}
