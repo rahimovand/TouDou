@@ -41,7 +41,9 @@ fun TodoItemRep(
         description = "I wanted to do smth here but t would be too much information to save that up so i just",
         data = "21.04.2006"
     ),
-    shape: Shape = RoundedCornerShape(16.dp)
+    shape: Shape = RoundedCornerShape(16.dp),
+    itemClicked: () -> Unit,
+    isItemDoneClicked: () -> Unit
 ) {
 
     Surface(
@@ -49,7 +51,7 @@ fun TodoItemRep(
             .fillMaxWidth()
             .wrapContentHeight(),
         shape = shape,
-        onClick = {},
+        onClick = itemClicked,
         color = MaterialTheme.colorScheme.surfaceVariant
     ) {
         Row(
@@ -72,12 +74,14 @@ fun TodoItemRep(
                 color = MaterialTheme.colorScheme.inverseSurface
             )
             IconButton(
-                onClick = {}
+                onClick = {
+                    // ijn this area new screen should be opened up and then adding proccess works there
+                }
             ) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = null)
             }
             IconButton(
-                onClick = {}
+                onClick = { isItemDoneClicked() }
             ) {
                 Icon(imageVector = Icons.Default.Check, contentDescription = null)
             }
@@ -90,6 +94,6 @@ fun TodoItemRep(
 @Composable
 fun EaItemRep() {
     TouDouTheme {
-        TodoItemRep()
+        TodoItemRep(itemClicked = {}, isItemDoneClicked = {})
     }
 }

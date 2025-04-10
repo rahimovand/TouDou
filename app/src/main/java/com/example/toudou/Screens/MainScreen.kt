@@ -5,8 +5,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,6 +26,8 @@ import com.example.toudou.ui.theme.TouDouTheme
 fun MainScreen(
     modifier: Modifier = Modifier
 ) {
+
+
     Scaffold(
         floatingActionButton = {
             TodoAddButton(
@@ -28,16 +37,13 @@ fun MainScreen(
             )
         },
         topBar = {
-            MyTopAppBar(
-                topMenuDropClicked = {
-                    // dropdown clicked in the top app
-                }
-            )
+            MyTopAppBar()
         }
-        ) { paddingValues ->
+    ) { paddingValues ->
         Column(
             modifier = modifier.padding(paddingValues)
         ) {
+
             TodoListItems()
         }
     }
