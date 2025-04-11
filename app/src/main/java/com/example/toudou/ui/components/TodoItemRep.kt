@@ -1,7 +1,9 @@
 package com.example.toudou.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.example.toudou.model.todo
 import com.example.toudou.ui.theme.TouDouTheme
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TodoItemRep(
     modifier: Modifier = Modifier,
@@ -42,23 +45,32 @@ fun TodoItemRep(
         data = "21.04.2006"
     ),
     shape: Shape = RoundedCornerShape(16.dp),
-    itemClicked: () -> Unit,
-    isItemDoneClicked: () -> Unit
+    itemClicked: () -> Unit, // normal click
+    itemLongClicked: () -> Unit, // long click to item
+    itemEditClicked: () -> Unit, // item edit button clicked
+    isItemCheckClicked: () -> Unit // item checked clicked up
 ) {
 
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .clip(shape)
+            .combinedClickable(
+                onClick = itemClicked,
+                onLongClick = itemLongClicked
+            )
+        ,
         shape = shape,
-        onClick = itemClicked,
+
         color = MaterialTheme.colorScheme.surfaceVariant
     ) {
         Row(
             modifier = modifier
                 .fillMaxWidth()
                 .height(95.dp)
-                .padding(10.dp),
+                .padding(10.dp)
+            ,
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
@@ -74,26 +86,16 @@ fun TodoItemRep(
                 color = MaterialTheme.colorScheme.inverseSurface
             )
             IconButton(
-                onClick = {
-                    // ijn this area new screen should be opened up and then adding proccess works there
-                }
+                onClick = itemEditClicked
             ) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = null)
             }
             IconButton(
-                onClick = { isItemDoneClicked() }
+                onClick = isItemCheckClicked
             ) {
                 Icon(imageVector = Icons.Default.Check, contentDescription = null)
             }
         }
     }
 
-}
-
-@Preview
-@Composable
-fun EaItemRep() {
-    TouDouTheme {
-        TodoItemRep(itemClicked = {}, isItemDoneClicked = {})
-    }
 }
