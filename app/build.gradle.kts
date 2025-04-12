@@ -27,7 +27,7 @@ android {
         }
     }
     compileOptions {
-        
+
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -40,6 +40,10 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
     coreLibraryDesugaring(libs.tools.desugar.jdk.libs)
     implementation(libs.androidx.core.ktx)

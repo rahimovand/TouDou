@@ -1,36 +1,36 @@
 package com.example.toudou.Screens
 
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.toudou.model.todo
 import com.example.toudou.ui.components.MyTopAppBar
 import com.example.toudou.ui.components.TodoAddButton
 import com.example.toudou.ui.components.TodoListItems
 import com.example.toudou.ui.theme.TouDouTheme
+import com.example.toudou.viewModel.TodoViewModel
 
 @Composable
 fun MainScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    taskViewModel:TodoViewModel = viewModel()
 ) {
 
-    val list = rememberSaveable {
-        mutableStateListOf(
-            todo(name = "", description = "", data = ""),
-            todo(name = "", description = "", data = ""),
-            todo(name = "", description = "", data = ""),
-        ).toMutableList()
-    }
+    val task by taskViewModel.task.collectAsState()
+    var areYouSureToDelete by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         floatingActionButton = {
@@ -46,8 +46,20 @@ fun MainScreen(
             modifier = modifier.padding(paddingValues)
         ) {
             TodoListItems(
-                list = list
+                list = task,
+                itemToDelete = {
+                  areYouSureToDelete = true
+                },
+                itemNormalClick = {
+                    // item normal click
+                }
             )
+            if (areYouSureToDelete) {
+                AlertDialog(
+                    onDismissRequest = { areYouSureToDelete = false },
+                    confirmButton = { taskViewModel.removeTask() }
+                )
+            }
         }
     }
 }
