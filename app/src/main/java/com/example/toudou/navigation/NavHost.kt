@@ -8,6 +8,8 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,7 +24,7 @@ import com.example.toudou.screens.AddScreen
 import com.example.toudou.screens.MainScreen
 import com.example.toudou.ui.TopAppBars.AddAppBar
 import com.example.toudou.ui.TopAppBars.MainAppbar
-import com.example.toudou.ui.components.TodoAddButton
+import com.example.toudou.ui.components.MyFloatingActionButton
 import com.example.toudou.viewModel.TodoViewModel
 
 @Composable
@@ -42,10 +44,11 @@ fun AppNavigation(
                 enter = slideInHorizontally(initialOffsetX = { it }) + fadeIn(),
                 exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
             ) {
-                TodoAddButton(
+                MyFloatingActionButton(
                     onClick = {
                         navController.navigate(Screens.AddScreen.name)
-                    }
+                    },
+                    icon = Icons.Default.Add
                 )
 
             }
@@ -54,7 +57,7 @@ fun AppNavigation(
             Crossfade(
                 targetState = currentRoute,
                 animationSpec = tween(
-                    durationMillis = 250
+                    durationMillis = 50
                 )
             ) { currentRoute ->
                 when (currentRoute) {
@@ -72,8 +75,7 @@ fun AppNavigation(
         ) {
             composable(Screens.MainScreen.name) {
                 MainScreen(
-                    navController = navController,
-                    TodoViewModel = TodoViewModel
+                    navController = navController, TodoViewModel = TodoViewModel
                 )
             }
             composable(Screens.AddScreen.name) {

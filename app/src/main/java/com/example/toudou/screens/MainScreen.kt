@@ -19,13 +19,12 @@ import com.example.toudou.viewModel.TodoViewModel
 
 @Composable
 fun MainScreen(
-    navController: NavController,
+    navController: NavController, // not used currenly but in the future might probably
     TodoViewModel: TodoViewModel = viewModel()
 ) {
 
     val task by TodoViewModel.task.collectAsState()
     var todo by rememberSaveable { mutableStateOf<todo?>(null) }
-
 
     TodoListItems(
         list = task,
@@ -33,7 +32,7 @@ fun MainScreen(
             todo = it
         },
         itemNormalClick = {
-            // item normal clicked here some kind of thing would happen
+            // item normal clicked here some AlertDialog or smth opens up and info just will be shown
         }
     )
     if (todo != null) {

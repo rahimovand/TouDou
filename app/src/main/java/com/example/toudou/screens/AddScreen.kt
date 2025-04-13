@@ -1,5 +1,7 @@
 package com.example.toudou.screens
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -36,11 +38,15 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
@@ -49,6 +55,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.toudou.logic.checkOneString
+import com.example.toudou.logic.twoStringsChecker
+import com.example.toudou.ui.components.MyFloatingActionButton
 import com.example.toudou.ui.theme.TouDouTheme
 import com.example.toudou.viewModel.TodoViewModel
 
@@ -56,10 +65,13 @@ import com.example.toudou.viewModel.TodoViewModel
 fun AddScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    TodoViewModel: TodoViewModel = viewModel()
+    TodoViewModel: TodoViewModel = viewModel(),
+    context: Context = LocalContext.current
 ) {
 
     val task by TodoViewModel.task.collectAsState()
+    var name by rememberSaveable { mutableStateOf("") }
+    var desc by rememberSaveable { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -96,7 +108,7 @@ fun AddScreen(
                             .height(20.dp)
                             .padding(top = 4.dp),
                         thickness = 1.dp,
-                        color = Color.Gray
+                        color = MaterialTheme.colorScheme.secondary
                     )
                     Surface(
                         modifier = modifier
@@ -114,8 +126,8 @@ fun AddScreen(
                                 modifier = modifier
                                     .fillMaxSize()
                                     .padding(2.dp),
-                                value = "asdasdasd",
-                                onValueChange = {},
+                                value = name,
+                                onValueChange = { name = it },
                                 maxLines = 1,
                                 shape = RoundedCornerShape(topStart = 40.dp, bottomEnd = 40.dp)
                             )
@@ -136,7 +148,7 @@ fun AddScreen(
                             .height(20.dp)
                             .padding(top = 4.dp),
                         thickness = 1.dp,
-                        color = Color.Gray
+                        color = MaterialTheme.colorScheme.secondary
                     )
                     Surface(
                         modifier = modifier
@@ -150,24 +162,26 @@ fun AddScreen(
                                 modifier = modifier
                                     .fillMaxSize()
                                     .padding(2.dp),
-                                value = "Description",
-                                onValueChange = {},
+                                value = desc,
+                                enabled = checkOneString(name),
+                                onValueChange = { desc = it },
                                 shape = RoundedCornerShape(bottomEnd = 25.dp, topStart = 25.dp)
                             )
                         }
                     }
                 }
             }
-            FloatingActionButton(
-                modifier = modifier
-                    .padding(end = 20.dp, bottom = 20.dp)
-                    .clip(RoundedCornerShape(16.dp)),
+            MyFloatingActionButton(
+                modifier = modifier.padding(end = 20.dp, bottom = 20.dp),
                 onClick = {
-                    navController.popBackStack()
+                   if (twoStringsChecker(name,desc)){
+                       navController.popBackStack()
+                   } else {
+                       Toast.makeText(context, "Blank Area Found", Toast.LENGTH_SHORT).show()
+                   }
                 },
-            ) {
-                Icon(imageVector = Icons.Default.Check, contentDescription = null)
-            }
+                icon = Icons.Default.Check
+            )
 
         }
     }

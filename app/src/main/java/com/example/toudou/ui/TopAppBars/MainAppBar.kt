@@ -65,8 +65,7 @@ fun MainAppbar(
                 expanded = isExpandedForTopAppBarMenu,
                 onDismissRequest = { isExpandedForTopAppBarMenu = false },
                 offset = DpOffset(x = (-15).dp, y = 25.dp),
-                modifier = modifier
-                    .background(color = MaterialTheme.colorScheme.surfaceContainerLowest),
+                modifier = modifier,
                 properties = PopupProperties(focusable = true)
             ) {
 
@@ -79,7 +78,8 @@ fun MainAppbar(
                         )
                     },
                     onClick = {
-                        //
+
+                        isExpandedForTopAppBarMenu = false
                     }
                 )
                 DropdownMenuItem(
@@ -87,7 +87,7 @@ fun MainAppbar(
                         Text(
                             "Exit",
                             textAlign = TextAlign.Center,
-                            modifier = modifier.fillMaxWidth(0.7f)
+                            modifier = modifier.fillMaxWidth()
                         )
                     },
                     onClick = {
