@@ -1,6 +1,9 @@
 package com.example.toudou.screens
 
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -22,6 +25,7 @@ fun MainScreen(
 
     val task by TodoViewModel.task.collectAsState()
     var todo by rememberSaveable { mutableStateOf<todo?>(null) }
+
 
     TodoListItems(
         list = task,

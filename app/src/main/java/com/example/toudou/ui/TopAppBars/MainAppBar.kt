@@ -17,6 +17,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,6 +42,7 @@ fun MainAppbar(
     var isExpandedForTopAppBarMenu by rememberSaveable { mutableStateOf(false) }
 
     TopAppBar(
+
         title = {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
