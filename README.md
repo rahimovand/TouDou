@@ -4,13 +4,13 @@ A sleek Android app that does saves information for you , can be changed , remov
 
 ---
 
-## ✨ Features
+## ✨ Features of the Application
 
-- 🐱‍👤 Dark Mode / Light Mode autoSupport
-- 🗑️ Delete Contacts
+- ⚔ Dark Mode / Light Mode autoSupport
+- 🗑️ Delete Todo & Note of yours
 - 🚀 Room for a strong local database
 - 📝 Add/Edit with the help of bottom sheets
-- 🌈 Jetpack Compose UI, no XML in sight
+- 🎯 Jetpack Compose UI, no XML in sight
 
 ---
 
@@ -26,3 +26,12 @@ A sleek Android app that does saves information for you , can be changed , remov
 | ![Screenshot_20250414_232614](https://github.com/user-attachments/assets/65a37791-1c11-439e-aa94-6e0dd5918d01) | ![Screenshot_20250414_232624](https://github.com/user-attachments/assets/66fb001c-09a4-4132-9c73-b48d72ee3ab4) 
 | ![Screenshot_20250414_232830](https://github.com/user-attachments/assets/02f245b7-377a-410d-b36c-2b706d6cd29e) | ![Screenshot_20250414_232639](https://github.com/user-attachments/assets/4738b046-e34a-44b7-80d1-1d8c67be808d)
 
+## 🚀 Tech Stack
+
+- **Kotlin**
+- **Jetpack Compose**
+- **No Architecture :(**
+- **Room - Database**
+- **ViewModels , Repository**
+
+---
