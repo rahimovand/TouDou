@@ -8,7 +8,7 @@ A sleek Android app that does saves information for you , can be changed , remov
 
 - ⚔ Dark Mode / Light Mode autoSupport
 - 🗑️ Delete Todo & Note of yours
-- 🚀 Room for a strong local database
+- 🚀 Room for a strong,secure local database
 - 📝 Add/Edit with the help of bottom sheets
 - 🎯 Jetpack Compose UI, no XML in sight
 
