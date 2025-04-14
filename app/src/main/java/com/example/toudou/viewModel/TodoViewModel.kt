@@ -11,6 +11,7 @@ import com.example.toudou.room.TodoDataBase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class TodoViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -34,6 +35,13 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun updateTodo(todo: todo){
+        viewModelScope.launch {
+            repository.updateTodo(todo)
+            _task.value = repository.getAllTodo()
+        }
+    }
+
     fun deleteTodo(todo: todo) {
         viewModelScope.launch {
             repository.deleteTodo(todo)
@@ -41,12 +49,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun getTodoById(id: Int): todo? {
-        var todo:todo? = null
-        viewModelScope.launch {
-            todo = repository.getTodoFromId(id)
-        }
-        return todo
+    fun getTodoById(id: Int): todo? = runBlocking {
+        repository.getTodoFromId(id)
     }
-
 }

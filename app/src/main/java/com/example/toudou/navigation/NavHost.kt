@@ -64,7 +64,7 @@ fun AppNavigation(
             Crossfade(
                 targetState = currentRoute,
                 animationSpec = tween(
-                    durationMillis = 50
+                    durationMillis = 150
                 )
             ) { currentRoute ->
                 when (currentRoute) {
@@ -72,7 +72,8 @@ fun AppNavigation(
                     Screens.AddScreen.name -> AddAppBar(navController = navController)
                 }
             }
-        }
+        },
+
     ) { paddingValues ->
 
         NavHost(

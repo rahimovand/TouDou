@@ -39,11 +39,7 @@ import com.example.toudou.ui.theme.TouDouTheme
 @Composable
 fun TodoItemRep(
     modifier: Modifier = Modifier,
-    todo: todo = todo(
-        name = "Application to do smth which is important",
-        description = "I wanted to do smth here but t would be too much information to save that up so i just",
-        data = "21.04.2006"
-    ),
+    todo: todo,
     shape: Shape = RoundedCornerShape(16.dp),
     itemClicked: () -> Unit, // normal click
     itemLongClicked: () -> Unit, // long click to item
@@ -82,7 +78,7 @@ fun TodoItemRep(
             }
             VerticalDivider(
                 modifier = modifier.padding(start = 5.dp, end = 10.dp),
-                thickness = 0.3.dp,
+                thickness = 0.5.dp,
                 color = MaterialTheme.colorScheme.inverseSurface
             )
             IconButton(

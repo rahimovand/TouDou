@@ -1,6 +1,7 @@
 package com.example.toudou.ui.TopAppBars
 
 import android.app.Activity
+import android.app.Application
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -25,11 +26,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.toudou.logic.TaskViewModelFactory
+import com.example.toudou.room.TodoDataBase
+import com.example.toudou.viewModel.TodoViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,6 +44,7 @@ fun MainAppbar(
     modifier: Modifier = Modifier,
     activity: Activity? = LocalActivity.current
 ) {
+
 
     var isExpandedForTopAppBarMenu by rememberSaveable { mutableStateOf(false) }
 
@@ -68,20 +75,6 @@ fun MainAppbar(
                 modifier = modifier,
                 properties = PopupProperties(focusable = true)
             ) {
-
-                DropdownMenuItem(
-                    text = {
-                        Text(
-                            "Clear All",
-                            textAlign = TextAlign.Center,
-                            modifier = modifier.fillMaxWidth()
-                        )
-                    },
-                    onClick = {
-
-                        isExpandedForTopAppBarMenu = false
-                    }
-                )
                 DropdownMenuItem(
                     text = {
                         Text(

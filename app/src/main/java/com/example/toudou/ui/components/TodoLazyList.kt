@@ -15,7 +15,9 @@ fun TodoListItems(
     modifier: Modifier = Modifier,
     list: List<todo>,
     itemToDelete: (todo) -> Unit,
-    itemNormalClick: () -> Unit
+    itemNormalClick: (Int) -> Unit,
+    itemCheckClicked: (todo) -> Unit,
+    itemEditClicked: (Int) -> Unit
 ) {
     val oddShape = CutCornerShape(topEnd = 16.dp, bottomStart = 16.dp)
     val evenShape = CutCornerShape(topStart = 16.dp, bottomEnd = 16.dp)
@@ -28,10 +30,15 @@ fun TodoListItems(
         items(list.size, key = { it }) {
             TodoItemRep(
                 shape = if (it % 2 != 0) oddShape else evenShape,
-                itemClicked = itemNormalClick,
-                isItemCheckClicked = {}, // item check clicked so the specific thing should be deleted
-                itemEditClicked = {}, // item edits clicked sop user goes from the current area to change screen to chnage specific thing
-                itemLongClicked = { itemToDelete(list[it]) }
+                itemClicked = {
+                    itemNormalClick(it)
+                },
+                isItemCheckClicked = { itemCheckClicked(list[it]) },
+                itemEditClicked = {
+                    itemEditClicked(list[it].id)
+                },
+                itemLongClicked = { itemToDelete(list[it]) },
+                todo = list[it]
             )
         }
 
