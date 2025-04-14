@@ -20,7 +20,7 @@ import com.example.toudou.viewModel.TodoViewModel
 @Composable
 fun MainScreen(
     navController: NavController, // not used currenly but in the future might probably
-    TodoViewModel: TodoViewModel = viewModel()
+    TodoViewModel: TodoViewModel
 ) {
 
     val task by TodoViewModel.task.collectAsState()
@@ -38,7 +38,7 @@ fun MainScreen(
     if (todo != null) {
         DeleteItemDialog(
             areYouSureToDelete = {
-                TodoViewModel.removeTask(todo!!)
+                TodoViewModel.deleteTodo(todo!!)
                 todo = null
             },
             dissMissDialog = {

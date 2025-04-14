@@ -21,7 +21,10 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
@@ -57,6 +60,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.toudou.logic.checkOneString
 import com.example.toudou.logic.twoStringsChecker
+import com.example.toudou.model.todo
 import com.example.toudou.ui.components.MyFloatingActionButton
 import com.example.toudou.ui.theme.TouDouTheme
 import com.example.toudou.viewModel.TodoViewModel
@@ -65,11 +69,11 @@ import com.example.toudou.viewModel.TodoViewModel
 fun AddScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    TodoViewModel: TodoViewModel = viewModel(),
+    TodoViewModel: TodoViewModel,
     context: Context = LocalContext.current
 ) {
 
-    val task by TodoViewModel.task.collectAsState()
+
     var name by rememberSaveable { mutableStateOf("") }
     var desc by rememberSaveable { mutableStateOf("") }
 
@@ -85,7 +89,8 @@ fun AddScreen(
             Card(
                 modifier = modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(1f),
+                    .fillMaxHeight(1f)
+                    .padding(start = 5.dp, end = 5.dp),
                 shape = CutCornerShape(topStart = 70.dp, bottomEnd = 210.dp)
             ) {
 
@@ -101,7 +106,8 @@ fun AddScreen(
                         text = "Name",
                         modifier = modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center,
-                        fontFamily = FontFamily.Monospace
+                        fontFamily = FontFamily.Serif,
+                        style = MaterialTheme.typography.titleLarge
                     )
                     VerticalDivider(
                         modifier = modifier
@@ -125,12 +131,26 @@ fun AddScreen(
                             OutlinedTextField(
                                 modifier = modifier
                                     .fillMaxSize()
-                                    .padding(2.dp),
+                                    .padding(2.dp)
+                                    .align(Alignment.CenterHorizontally),
                                 value = name,
                                 onValueChange = { name = it },
                                 maxLines = 1,
-                                shape = RoundedCornerShape(topStart = 40.dp, bottomEnd = 40.dp)
-                            )
+                                shape = RoundedCornerShape(topStart = 40.dp, bottomEnd = 40.dp),
+                                trailingIcon = {
+                                    if (checkOneString(name)) {
+                                        IconButton(
+                                            modifier = modifier.padding(end = 15.dp),
+                                            onClick = {
+                                                name = " "
+                                            }
+                                        ) {
+                                            Icon(Icons.Default.Clear, contentDescription = null)
+                                        }
+                                    }
+                                },
+
+                                )
 
                         }
                     }
@@ -141,7 +161,8 @@ fun AddScreen(
                             .fillMaxWidth()
                             .padding(top = 15.dp),
                         textAlign = TextAlign.Center,
-                        fontFamily = FontFamily.Monospace
+                        fontFamily = FontFamily.Serif,
+                        style = MaterialTheme.typography.titleLarge
                     )
                     VerticalDivider(
                         modifier = modifier
@@ -174,31 +195,19 @@ fun AddScreen(
             MyFloatingActionButton(
                 modifier = modifier.padding(end = 20.dp, bottom = 20.dp),
                 onClick = {
-                   if (twoStringsChecker(name,desc)){
-                       navController.popBackStack()
-                   } else {
-                       Toast.makeText(context, "Blank Area Found", Toast.LENGTH_SHORT).show()
-                   }
+                    if (twoStringsChecker(name, desc)) {
+
+                        val todo = todo(name = name, description = desc)
+                        TodoViewModel.insertTodo(todo)
+                        navController.popBackStack()
+
+                    } else {
+                        Toast.makeText(context, "Blank Area Found", Toast.LENGTH_SHORT).show()
+                    }
                 },
                 icon = Icons.Default.Check
             )
 
         }
-    }
-}
-
-@Preview(showBackground = true, device = Devices.PIXEL_3A)
-@Composable
-fun AddScreenPreview() {
-    TouDouTheme {
-        AddScreen(navController = rememberNavController())
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AddScreenPreviewDArk() {
-    TouDouTheme(darkTheme = true) {
-        AddScreen(navController = rememberNavController())
     }
 }

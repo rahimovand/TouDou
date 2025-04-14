@@ -1,23 +1,52 @@
 package com.example.toudou.viewModel
 
+import android.app.Application
 import androidx.compose.runtime.State
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.toudou.model.todo
+import com.example.toudou.repository.TodoRepository
+import com.example.toudou.room.TodoDataBase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
-class TodoViewModel : ViewModel() {
+class TodoViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _task = MutableStateFlow<List<todo>>(listOf(todo(name = "Odiljdasadsdasdasdasdasd", description = "sadfffffffffffdsssssssssssssdffdsfdssdfdsfdfdfssdfds", data = "dffsdfsdfsdfsdfsdfsdfsdfsdfsdf")))
+
+    private val db = TodoDataBase.getDatabase(application)
+    private val repository = TodoRepository(db.todoDao())
+
+    private val _task = MutableStateFlow<List<todo>>(emptyList())
     val task: StateFlow<List<todo>> = _task
 
-    fun addTask(todo: todo) {
-        _task.value += todo
+    init {
+        viewModelScope.launch {
+            _task.value = repository.getAllTodo()
+        }
     }
 
-    fun removeTask(todo: todo) {
-        _task.value -= todo
+    fun insertTodo(todo: todo) {
+        viewModelScope.launch {
+            repository.insertTodo(todo)
+            _task.value = repository.getAllTodo()
+        }
     }
 
+    fun deleteTodo(todo: todo) {
+        viewModelScope.launch {
+            repository.deleteTodo(todo)
+            _task.value = repository.getAllTodo()
+        }
+    }
+
+    fun getTodoById(id: Int): todo? {
+        var todo:todo? = null
+        viewModelScope.launch {
+            todo = repository.getTodoFromId(id)
+        }
+        return todo
+    }
 
 }

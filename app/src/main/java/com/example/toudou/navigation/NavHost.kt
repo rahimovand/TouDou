@@ -1,5 +1,6 @@
 package com.example.toudou.navigation
 
+import android.app.Application
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
@@ -14,12 +15,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.toudou.destinations.Screens
+import com.example.toudou.logic.TaskViewModelFactory
 import com.example.toudou.screens.AddScreen
 import com.example.toudou.screens.MainScreen
 import com.example.toudou.ui.TopAppBars.AddAppBar
@@ -32,7 +35,11 @@ fun AppNavigation(
     modifier: Modifier = Modifier
 ) {
     val navController = rememberNavController()
-    val TodoViewModel: TodoViewModel = viewModel()
+    val context = LocalContext.current.applicationContext as Application
+
+    val TodoViewModel: TodoViewModel = viewModel(
+        factory = TaskViewModelFactory(context)
+    )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
